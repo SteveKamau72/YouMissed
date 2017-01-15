@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_app_icon" />
+
+                    <TextView
+                        android:id="@+id/app_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    card_view:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp">
+
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/user2" />
+
+                        <TextView
+                            android:id="@+id/t1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/img"
+                            android:text="Steve"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/t1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/img"
+                            android:fontFamily="sans-serif-light"
+                            android:text="You have 1 missed call"
+                            android:textSize="14dp" />
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.CardView>
+                <!--second row-->
+
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp">
+
+                        <ImageView
+                            android:id="@+id/img1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/user1" />
+
+                        <TextView
+                            android:id="@+id/t1_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/img1"
+                            android:text="Chubi"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/t1_1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_toRightOf="@+id/img1"
+                            android:fontFamily="sans-serif-light"
+                            android:text="You missed 5 calls"
+                            android:textSize="14dp" />
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/shadow"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_below="@+id/view1"
+                android:background="@drawable/shadow" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shadow"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Automatically send SMS to missed calls"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title2"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="*We are requesting for permissions to send SMS and make calls, kindly accept."
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/get_started"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/green_btn"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Get Started"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+    </LinearLayout>
+</RelativeLayout>

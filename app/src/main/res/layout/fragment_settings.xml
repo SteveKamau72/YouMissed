@@ -1,0 +1,185 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="com.youmissed.Settings">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/app_bar_layout"
+                layout="@layout/app_bar" />
+
+            <TextView
+                android:id="@+id/enableDisableFeature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/circular_anticlockwise_color_light"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="You have disabled sending SMS to missed calls. Your users will not be notified by SMS. Enable the feature on the top right"
+                android:textColor="@color/white" />
+            <!--sms settings-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/sms_settings"
+                android:textColor="@color/circular_anticlockwise_color"
+                android:textStyle="bold" />
+            <!--delaytime duration-->
+            <LinearLayout
+                android:id="@+id/delayTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delay_time"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/delay_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="Set to 10secs"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/light_grey" />
+            <!--custom message-->
+            <LinearLayout
+                android:id="@+id/custom_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_custom_message"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#f2f5fa"
+                    android:padding="5dp">
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="5dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignBottom="@+id/custom_message"
+                        android:layout_alignTop="@+id/custom_message"
+                        android:layout_centerVertical="true"
+                        android:background="@color/circular_anticlockwise_color" />
+
+                    <TextView
+                        android:id="@+id/custom_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/set_custom_message"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!--support-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/support"
+                android:textColor="@color/circular_anticlockwise_color"
+                android:textStyle="bold" />
+            <!--feedback-->
+            <LinearLayout
+                android:id="@+id/feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_feedback"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/light_grey" />
+            <!--contact-->
+            <LinearLayout
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="14dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact_developer"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/light_grey" />
+            <!--about-->
+            <LinearLayout
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="clockwise_color">#00B0FF</color>
+    <color name="circular_background_color">#F57F17</color>
+    <color name="circular_clockwise_color">#fff</color>
+    <!-- <color name="circular_background_color2">#212121</color>-->
+    <color name="circular_background_color2">#232936</color>
+    <!--<color name="circular_anticlockwise_color">#43A047</color>-->
+    <color name="circular_anticlockwise_color">#F9757D</color>
+    <color name="white">#fff</color>
+</resources>

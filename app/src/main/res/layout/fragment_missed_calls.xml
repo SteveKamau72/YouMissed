@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="com.youmissed.MissedCallsFragment">
+
+    <include
+        android:id="@+id/app_bar_layout"
+        layout="@layout/app_bar" />
+
+    <TextView
+        android:id="@+id/today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_bar_layout"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:text="@string/today"
+        android:textColor="@color/circular_anticlockwise_color"
+        android:textStyle="bold" />
+    <!--recyclerview-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/today"
+        android:scrollbars="vertical" />
+
+    <!--empty view-->
+    <RelativeLayout
+        android:id="@+id/empty_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@+id/title_empty_message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/empty_missed_calls" />
+
+        <TextView
+            android:id="@+id/title_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/no_missed_calls_yet"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/sub_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_empty_message"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/calls_that_you_missed_will_be_listed_here"
+            android:textColor="@color/light_grey"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</RelativeLayout>
