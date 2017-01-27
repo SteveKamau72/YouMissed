@@ -61,7 +61,7 @@
             tools:text="Sending Text in:" />
     </LinearLayout>
 
-    <com.youmissed.CircleCountDownView
+    <com.youmissed.activities.CircleCountDownView
         android:id="@+id/circle_count_down_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

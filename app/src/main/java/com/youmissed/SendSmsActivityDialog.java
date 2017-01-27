@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.youmissed.activities.CircleCountDownView;
+import com.youmissed.app.RealmController;
+
 public class SendSmsActivityDialog extends Activity {
     final Context context = this;
     protected CircleCountDownView countDownView;

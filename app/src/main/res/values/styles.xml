@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/black</item>
     </style>
 
     <style name="Theme.Transparent" parent="AppTheme">
@@ -15,6 +16,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="MySwitch" parent="Theme.AppCompat.Light">
