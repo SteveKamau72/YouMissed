@@ -34,4 +34,6 @@
     <string name="contacts_that_you_blocked_will_be_listed_here">Contacts that you blocked will be listed here</string>
     <string name="delete_missed_calls">Deleted All Missed Calls!</string>
     <string name="info">Blocked Info</string>
+    <string name="message_add_on">https://goo.gl/gxrhRJ</string>
+    <string name="rate">Rate this app</string>
 </resources>

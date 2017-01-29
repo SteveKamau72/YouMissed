@@ -85,7 +85,7 @@ public class NotificationHandler {
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(intent);
 
-        PendingIntent pendingIntent = stackBuilder
+        final PendingIntent pendingIntent = stackBuilder
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT
                         | PendingIntent.FLAG_ONE_SHOT);
         // building the notification
@@ -127,6 +127,7 @@ public class NotificationHandler {
                         nBuilder.setContentTitle("Sending SMS to " + contactName)
                                 .setContentText("Tap to cancel").setAutoCancel(false)
                                 .setProgress(delayTime, i, false).setLargeIcon(bitmap)
+                                .setContentIntent(pendingIntent)
                                 .setSmallIcon(R.mipmap.ic_launcher);
 
                         // use the same id for update instead created another one
@@ -149,7 +150,8 @@ public class NotificationHandler {
                 Boolean isSwitchChecked = sharedPreferences.getBoolean("sms_switch", true);
                 if (isSwitchChecked) {
                     MainActivity ma = new MainActivity();
-                    if (ma.isToSendSms()) {
+                    Log.d("toStopSendingSms_2", String.valueOf(ma.toStopSendingSMSMethod()));
+                    if (!ma.toStopSendingSMSMethod()) {
                         if (contactName.equalsIgnoreCase("Unknown")) {
                             if (sharedPreferences.getBoolean("sms_unknown_callers", true)) {
                                 sendSMS(progresID, message, context, number);
@@ -159,6 +161,9 @@ public class NotificationHandler {
                         } else {
                             sendSMS(progresID, message, context, number);
                         }
+
+                    } else {
+                        updateSmsStatus("Sending SMS cancelled by user", nBuilder, progresID, number, message, context, false);
 
                     }
                 } else {
@@ -175,18 +180,19 @@ public class NotificationHandler {
     private void sendSMS(int progresID, String message, Context context, String number) {
         String SENT_SMS_FLAG = "sent";
         Log.d("sms_track_sending", "triggered");
+        String messageToSend = message + "\n Checkout YouMissed app: " + context.getString(R.string.message_add_on);
         SmsManager smsManager = SmsManager.getDefault();
         Intent intent = new Intent(SENT_SMS_FLAG);
         intent.putExtra("progressID", progresID);
         intent.putExtra("phoneNumber", number);
-        intent.putExtra("message", message);
+        intent.putExtra("message", messageToSend);
         PendingIntent sentIntent = PendingIntent.getBroadcast(context, 0,
                 intent, 0);
         context.getApplicationContext().registerReceiver(
                 new MessageSentListener(),
                 new IntentFilter(SENT_SMS_FLAG));
         smsManager.sendTextMessage(number, null,
-                message, sentIntent, null);
+                messageToSend, sentIntent, null);
     }
 
     private void updateSmsStatus(String s, NotificationCompat.Builder nBuilder, int progresID, String number, String message, Context context, Boolean smsSent) {

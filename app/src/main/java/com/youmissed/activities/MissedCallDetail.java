@@ -34,7 +34,7 @@ import com.youmissed.CallsModel;
 import com.youmissed.R;
 import com.youmissed.adapters.MissedCallsTimeAdapter;
 import com.youmissed.app.CallUserIdentifier;
-import com.youmissed.app.IntentUtils;
+import com.youmissed.utils.IntentUtils;
 import com.youmissed.app.RealmController;
 import com.youmissed.utils.Toasty;
 

@@ -24,7 +24,7 @@ import com.youmissed.CallsModel;
 import com.youmissed.R;
 import com.youmissed.activities.MainActivity;
 import com.youmissed.activities.MissedCallDetail;
-import com.youmissed.app.IntentUtils;
+import com.youmissed.utils.IntentUtils;
 import com.youmissed.app.RealmController;
 import com.youmissed.utils.Toasty;
 

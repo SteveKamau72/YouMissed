@@ -37,7 +37,8 @@
             android:name=".SendSmsActivityDialog"
             android:theme="@style/Theme.Transparent" />
         <activity android:name=".activities.MissedCallDetail" />
-        <activity android:name=".activities.BlockedContacts"></activity>
+        <activity android:name=".activities.BlockedContacts" />
+        <activity android:name=".activities.ContactList"></activity>
     </application>
 
 </manifest>

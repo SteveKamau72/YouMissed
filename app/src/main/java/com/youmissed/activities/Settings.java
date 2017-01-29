@@ -19,8 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.youmissed.R;
-import com.youmissed.app.IntentUtils;
+import com.youmissed.utils.IntentUtils;
 import com.youmissed.utils.Toasty;
 
 import java.util.Arrays;
@@ -65,7 +66,8 @@ public class Settings extends Fragment {
         ButterKnife.bind(this, v);
         pageTitleText.setText(R.string.settings);
         sharedPref = getActivity().getSharedPreferences("general_settings", Context.MODE_PRIVATE);
-        tvMessage.setText(sharedPref.getString("sms_message", "Hey, I'm currently not near my phone, but i'll get back to you as soon as i can :)"
+        tvMessage.setText(sharedPref.getString("sms_message",
+                "Hey, I'm currently not near my phone, but i'll get back to you as soon as i can :)"
         ));
         //tvDelayTime.setText("Set to " + sharedPref.getInt("delay_time", 10) + " secs");
         tvDelayTime.setText("Set to " + sharedPref.getString("delay_time_to_display", "10 secs"));
@@ -223,6 +225,38 @@ public class Settings extends Fragment {
         } else {
             unknownCallersSwitch.setChecked(true);
         }
+    }
+
+    @OnClick(R.id.rate)
+    void onrateViewClicked() {
+        final RatingDialog ratingDialog = new RatingDialog.Builder(getActivity())
+                .icon(getResources().getDrawable(R.drawable.ic_app_icon))
+                .title("We're awesome, yes? Rate us")
+                .titleTextColor(R.color.black)
+                .negativeButtonText("Not Now")
+                .negativeButtonTextColor(R.color.grey_200)
+                .threshold(3)
+                .formTitle("Submit Feedback")
+                .formHint("Tell us where we can improve")
+                .formSubmitText("Submit")
+                .formCancelText("Cancel")
+                .ratingBarColor(R.color.accent)
+                .positiveButtonBackgroundColor(R.drawable.button_selector_positive)
+                .negativeButtonBackgroundColor(R.drawable.button_selector_negative)
+                .onRatingChanged(new RatingDialog.RatingDialogListener() {
+                    @Override
+                    public void onRatingSelected(float rating, boolean thresholdCleared) {
+                        //startActivity(Intent.createChooser(IntentUtils
+                    }
+                })
+                .onRatingBarFormSumbit(new RatingDialog.RatingDialogFormListener() {
+                    @Override
+                    public void onFormSubmitted(String feedback) {
+                        startActivity(Intent.createChooser(IntentUtils.sendEmail("steveKamau72@gmail.com", "FeedBack on YouMissed App for Android", feedback), "Email us"));
+                    }
+                }).build();
+
+        ratingDialog.show();
     }
 
     public void setStateForUnknownCallers(Boolean state) {

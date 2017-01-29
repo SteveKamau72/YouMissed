@@ -25,7 +25,7 @@ import com.youmissed.R;
 import com.youmissed.activities.BlockedContacts;
 import com.youmissed.activities.MainActivity;
 import com.youmissed.activities.MissedCallDetail;
-import com.youmissed.app.IntentUtils;
+import com.youmissed.utils.IntentUtils;
 import com.youmissed.utils.Toasty;
 
 import java.util.List;

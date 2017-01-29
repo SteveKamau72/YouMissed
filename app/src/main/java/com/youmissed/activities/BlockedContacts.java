@@ -2,6 +2,7 @@ package com.youmissed.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +28,7 @@ import com.youmissed.utils.Toasty;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class BlockedContacts extends AppCompatActivity {
     @BindView(R.id.recycler_view)
@@ -35,6 +37,7 @@ public class BlockedContacts extends AppCompatActivity {
     RelativeLayout emptyMissedCallsLayout;
     BlockedContactsAdapter blockedContactsAdapter;
     SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,4 +134,11 @@ public class BlockedContacts extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+    @OnClick(R.id.fab)
+    void onFabClicked() {
+        Intent i = new Intent(getApplicationContext(), ContactList.class);
+        startActivity(i);
+    }
+
 }

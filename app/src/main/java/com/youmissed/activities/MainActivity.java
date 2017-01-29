@@ -25,14 +25,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.nineoldandroids.animation.Animator;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.youmissed.CallsModel;
 import com.youmissed.R;
 import com.youmissed.adapters.MainPagerAdapter;
-import com.youmissed.app.IntentUtils;
 import com.youmissed.app.RealmController;
+import com.youmissed.utils.IntentUtils;
 import com.youmissed.utils.Toasty;
 
 import java.text.SimpleDateFormat;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.launched_first_time)
     FrameLayout frameLayout;
     FragmentTransaction fragmentTransaction;
-    Boolean toSendSms = true;
+    Boolean toStopSendingSMS = false;
     private CircularBarPager mCircularBarPager;
 
     @Override
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
    /*     Intent i = new Intent(getApplicationContext(), SendSmsActivityDialog.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);*/
+        ratingDialog();
     }
 
     private void showStartPage() {
@@ -414,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_share) {
             final String appPackageName = getPackageName();
             startActivity(Intent.createChooser(IntentUtils.shareContent("" +
-                    "Hey, checkout this amazing app " + "LINK" + appPackageName, "YouMissedApp for Android"), "Share..."));
+                    "Automatically send SMS replies to missed calls. Checkout the app: " + getString(R.string.message_add_on), "YouMissedApp for Android"), "Share..."));
         }
       /*   startActivity(Intent.createChooser(shareIntent, "share..."));
 
@@ -428,25 +430,59 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onNewIntent(Intent intent) {
         Bundle extras = intent.getExtras();
+
         if (extras != null) {
             if (extras.containsKey("toStopSendingSms")) {
+                Log.d("toStopSendingSms_1", String.valueOf(extras.getBoolean("toStopSendingSms")));
                 // extract the extra-data in the Notification
                 String contact_name = extras.getString("contact_name");
-                this.toSendSms = false;
-                NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                nMgr.cancel(2989);
-                Toast.makeText(getApplicationContext(), "Cancelled Sending sms to " + contact_name, Toast.LENGTH_LONG).show();
+                this.toStopSendingSMS = true;
+                Toasty.success(getApplicationContext(), "Cancelled Sending sms to " + contact_name, Toast.LENGTH_LONG, true).show();
+                //Toast.makeText(getApplicationContext(), "Cancelled Sending sms to " + contact_name, Toast.LENGTH_LONG).show();
             }
         }
+        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancel(2989);
 
 
     }
 
-    public Boolean isToSendSms() {
-        return toSendSms;
+    public Boolean toStopSendingSMSMethod() {
+        return toStopSendingSMS;
     }
 
 
+    private void ratingDialog() {
+        final RatingDialog ratingDialog = new RatingDialog.Builder(MainActivity.this)
+                .icon(getResources().getDrawable(R.drawable.ic_app_icon))
+                .title("We're awesome, yes? Rate us")
+                .titleTextColor(R.color.black)
+                .negativeButtonText("Not Now")
+                .negativeButtonTextColor(R.color.grey_200)
+                .threshold(3)
+                .session(3)
+                .formTitle("Submit Feedback")
+                .formHint("Tell us where we can improve")
+                .formSubmitText("Submit")
+                .formCancelText("Cancel")
+                .ratingBarColor(R.color.accent)
+                .positiveButtonBackgroundColor(R.drawable.button_selector_positive)
+                .negativeButtonBackgroundColor(R.drawable.button_selector_negative)
+                .onRatingChanged(new RatingDialog.RatingDialogListener() {
+                    @Override
+                    public void onRatingSelected(float rating, boolean thresholdCleared) {
+
+                    }
+                })
+                .onRatingBarFormSumbit(new RatingDialog.RatingDialogFormListener() {
+                    @Override
+                    public void onFormSubmitted(String feedback) {
+                        startActivity(Intent.createChooser(IntentUtils.sendEmail("steveKamau72@gmail.com", "FeedBack on YouMissed App for Android", feedback), "Email us"));
+                    }
+                }).build();
+
+        ratingDialog.show();
+    }
     // TODO: 1/10/17 use realm database for missed calls
     // TODO: 1/10/17 custom adapter for missed calls
     // TODO: 1/10/17 what i need- current time, phone-number, name of user

@@ -49,7 +49,8 @@ public class CallReceiver extends PhonecallReceiver {
         //
         //Toast.makeText(ctx, "Missed call: " + number, Toast.LENGTH_LONG).show();
         SharedPreferences sharedPref = ctx.getSharedPreferences("general_settings", Context.MODE_PRIVATE);
-        String message = sharedPref.getString("sms_message", "Hey, I'm currently not near my phone, but i'll get back to you as soon as i can :)"
+        String message = sharedPref.getString("sms_message",
+                "Hey, I'm currently not near my phone, but i'll get back to you as soon as i can :)"
         );
 
         Log.d("sms_track_e", "On missed call");
