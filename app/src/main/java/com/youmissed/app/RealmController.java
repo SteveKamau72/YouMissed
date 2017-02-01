@@ -5,7 +5,7 @@ import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.youmissed.CallsModel;
+import com.youmissed.utils.CallsModel;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;

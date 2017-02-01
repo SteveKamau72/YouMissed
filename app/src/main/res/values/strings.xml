@@ -36,4 +36,8 @@
     <string name="info">Blocked Info</string>
     <string name="message_add_on">https://goo.gl/gxrhRJ</string>
     <string name="rate">Rate this app</string>
+    <string name="default_sms_message">Sorry i missed your call, i\'ll get back to you as soon as i can.</string>
+    <string name="unblock">Unblock</string>
+    <string name="sms_settings_message">The long version is: You have disabled sending SMS to calls that you missed. Sad face, real bummer. Short version: Your missed callers will not be notified by SMS. To fix  this? Re-enable SMS feature on the top right.</string>
+    <string name="about_footer">Made for you, for fun! Go nuts with it!</string>
 </resources>

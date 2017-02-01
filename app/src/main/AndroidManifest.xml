@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".app.AppApplicaton"
+        android:name="com.youmissed.app.AppApplicaton"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -33,12 +33,11 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".SendSmsActivityDialog"
-            android:theme="@style/Theme.Transparent" />
         <activity android:name=".activities.MissedCallDetail" />
         <activity android:name=".activities.BlockedContacts" />
-        <activity android:name=".activities.ContactList"></activity>
+        <activity
+            android:name=".activities.ContactList"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

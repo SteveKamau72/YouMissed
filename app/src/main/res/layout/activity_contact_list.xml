@@ -26,7 +26,7 @@
             android:hint="Search contact..."
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="30"
-            android:padding="5dp"
+            android:padding="7dp"
             android:scrollbars="vertical" />
     </android.support.v7.widget.Toolbar>
 

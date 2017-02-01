@@ -29,7 +29,7 @@ import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.nineoldandroids.animation.Animator;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.youmissed.CallsModel;
+import com.youmissed.utils.CallsModel;
 import com.youmissed.R;
 import com.youmissed.adapters.MainPagerAdapter;
 import com.youmissed.app.RealmController;
@@ -457,10 +457,9 @@ public class MainActivity extends AppCompatActivity {
                 .icon(getResources().getDrawable(R.drawable.ic_app_icon))
                 .title("We're awesome, yes? Rate us")
                 .titleTextColor(R.color.black)
-                .negativeButtonText("Not Now")
-                .negativeButtonTextColor(R.color.grey_200)
                 .threshold(3)
                 .session(3)
+//                .session(4)
                 .formTitle("Submit Feedback")
                 .formHint("Tell us where we can improve")
                 .formSubmitText("Submit")

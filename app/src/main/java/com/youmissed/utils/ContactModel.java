@@ -8,6 +8,15 @@ public class ContactModel {
 
     String phoneNumber, userName;
 
+    public ContactModel(String userName, String phoneNumber) {
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public ContactModel() {
+
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

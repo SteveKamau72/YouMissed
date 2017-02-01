@@ -3,16 +3,12 @@ package com.youmissed.adapters;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,10 +16,9 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.youmissed.CallsModel;
+import com.youmissed.utils.CallsModel;
 import com.youmissed.R;
 import com.youmissed.activities.BlockedContacts;
-import com.youmissed.activities.MainActivity;
 import com.youmissed.activities.MissedCallDetail;
 import com.youmissed.utils.IntentUtils;
 import com.youmissed.utils.Toasty;
@@ -127,12 +122,13 @@ public class BlockedContactsAdapter extends RecyclerView.Adapter<BlockedContacts
                         } else if (index == 1) {
                             mContext.startActivity(IntentUtils.sendSms(mContext, callsModel.getPhoneNumber(), ""));
                         } else if (index == 2) {
-                            if (sharedPreferences.getBoolean("show_block_dialog", false)) {
+                            //add to blocklist immediately
+                            ((BlockedContacts) mContext).removeBlockedUserToRealm(callsModel, mContext);
+                           /* if (sharedPreferences.getBoolean("show_block_dialog", false)) {
                                 showBlockDialog(callsModel);
                             } else {
-                                //add to blocklist immediately
-                                ((BlockedContacts) mContext).removeBlockedUserToRealm(callsModel, mContext);
-                            }
+
+                            }*/
 
                         } else if (index == 3) {
                             Toasty.success(mContext, mContext.getString(R.string.copied), Toast.LENGTH_SHORT, true).show();
@@ -148,40 +144,6 @@ public class BlockedContactsAdapter extends RecyclerView.Adapter<BlockedContacts
                 .show();
     }
 
-    private void showBlockDialog(final CallsModel callsModel) {
-        // custom dialog
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View dialogView = inflater.inflate(R.layout.block_user_info, null);
-        dialogBuilder.setView(dialogView);
-
-        final CheckBox checkBox = (CheckBox) dialogView.findViewById(R.id.checkbox);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("show_block_dialog", b);
-                editor.apply();
-            }
-        });
-        dialogBuilder.setPositiveButton("Do it", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Toasty.success(mContext, mContext.getString(R.string.blocked), Toast.LENGTH_SHORT, true).show();
-                //add to blocklist immediately
-                ((MainActivity) mContext).addBlockedUserToRealm(callsModel.getPhoneNumber(), mContext);
-                dialog.cancel();
-            }
-        });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
-
-    }
 
     @Override
     public int getItemCount() {

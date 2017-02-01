@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.youmissed.CallsModel;
+import com.youmissed.utils.CallsModel;
 import com.youmissed.R;
 
 import java.text.DateFormat;

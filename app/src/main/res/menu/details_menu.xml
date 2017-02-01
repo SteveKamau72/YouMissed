@@ -9,6 +9,10 @@
         android:id="@+id/action_add_block_list"
         android:title="@string/block"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_remove_block_list"
+        android:title="@string/unblock"
+        app:showAsAction="never" />
  <!--   <item
         android:id="@+id/action_edit"
         android:title="@string/edit"

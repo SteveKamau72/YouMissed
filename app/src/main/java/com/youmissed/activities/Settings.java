@@ -67,7 +67,7 @@ public class Settings extends Fragment {
         pageTitleText.setText(R.string.settings);
         sharedPref = getActivity().getSharedPreferences("general_settings", Context.MODE_PRIVATE);
         tvMessage.setText(sharedPref.getString("sms_message",
-                "Hey, I'm currently not near my phone, but i'll get back to you as soon as i can :)"
+                getResources().getString(R.string.default_sms_message)
         ));
         //tvDelayTime.setText("Set to " + sharedPref.getInt("delay_time", 10) + " secs");
         tvDelayTime.setText("Set to " + sharedPref.getString("delay_time_to_display", "10 secs"));
@@ -116,7 +116,7 @@ public class Settings extends Fragment {
         dialogBuilder.setView(dialogView);
 
         edMessage = (EditText) dialogView.findViewById(R.id.ed_message);
-        edMessage.setText(sharedPref.getString("sms_message", "Hey, I'm currently not near my phone, but i'll get back to you as soon as i can :)"
+        edMessage.setText(sharedPref.getString("sms_message", getResources().getString(R.string.default_sms_message)
         ));
         edMessage.setSelection(edMessage.getText().length());
 

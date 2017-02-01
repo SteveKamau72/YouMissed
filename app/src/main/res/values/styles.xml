@@ -29,4 +29,8 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">@color/light_teal</item>
     </style>
+    <style name="myDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        ...
+    </style>
 </resources>

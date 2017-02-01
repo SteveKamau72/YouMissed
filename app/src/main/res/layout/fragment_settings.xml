@@ -26,7 +26,7 @@
                 android:background="@color/circular_anticlockwise_color"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="You have disabled sending SMS to missed calls. Your users will not be notified by SMS. Enable the feature on the top right"
+                android:text="@string/sms_settings_message"
                 android:textColor="@color/white" />
             <!--sms settings-->
             <TextView
@@ -110,6 +110,7 @@
                         android:textSize="14sp" />
                 </RelativeLayout>
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -184,6 +185,11 @@
                     android:textSize="18sp" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/light_grey" />
             <!--feedback-->
             <LinearLayout
                 android:id="@+id/feedback"

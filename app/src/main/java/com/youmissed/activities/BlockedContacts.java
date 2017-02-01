@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,14 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.youmissed.CallsModel;
 import com.youmissed.R;
 import com.youmissed.adapters.BlockedContactsAdapter;
 import com.youmissed.app.RealmController;
+import com.youmissed.utils.CallsModel;
 import com.youmissed.utils.Toasty;
 
 import butterknife.BindView;
@@ -36,7 +36,6 @@ public class BlockedContacts extends AppCompatActivity {
     @BindView(R.id.empty_view_layout)
     RelativeLayout emptyMissedCallsLayout;
     BlockedContactsAdapter blockedContactsAdapter;
-    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -45,7 +44,6 @@ public class BlockedContacts extends AppCompatActivity {
         setContentView(R.layout.activity_blocked_contacts);
         ButterKnife.bind(this);
         setUpViews();
-        sharedPreferences = getSharedPreferences("general_settings", Context.MODE_PRIVATE);
     }
 
     public void setUpViews() {
@@ -57,12 +55,17 @@ public class BlockedContacts extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Blocked Contacts");
 
+        setUpAdapter();
+    }
+
+    private void setUpAdapter() {
         if (RealmController.with(this).getBlockedContacts().size() > 0) {
             blockedContactsAdapter = new BlockedContactsAdapter(this, RealmController.with(this).getBlockedContacts());
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(blockedContactsAdapter);
+            emptyMissedCallsLayout.setVisibility(View.INVISIBLE);
         } else {
             //set empty view if there are no missed calls
             emptyMissedCallsLayout.setVisibility(View.VISIBLE);
@@ -84,6 +87,12 @@ public class BlockedContacts extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setUpAdapter();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -96,6 +105,8 @@ public class BlockedContacts extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_info) {
+            //Toast.makeText(getApplicationContext(),"TIS",Toast.LENGTH_SHORT).show();
+            // Dialogs.showBlockDialog(getApplicationContext());
             showBlockDialog();
             return true;
         }
@@ -103,30 +114,34 @@ public class BlockedContacts extends AppCompatActivity {
 
     }
 
-    private void showBlockDialog() {
+    public void showBlockDialog() {
+        final SharedPreferences sharedPreferences = getSharedPreferences("general_settings", Context.MODE_PRIVATE);
         // custom dialog
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.block_user_info, null);
         dialogBuilder.setView(dialogView);
 
         final CheckBox checkBox = (CheckBox) dialogView.findViewById(R.id.checkbox);
         if (sharedPreferences.getBoolean("show_block_dialog", false)) {
-            checkBox.setChecked(true);
-        } else {
             checkBox.setChecked(false);
+        } else {
+            checkBox.setChecked(true);
         }
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("show_block_dialog", b);
-                editor.apply();
-            }
-        });
-        dialogBuilder.setNeutralButton("Got it", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
 
+        dialogBuilder.setPositiveButton("Aye aye", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Boolean checked;
+                if (checkBox.isChecked()) {
+                    checked = false;
+                } else {
+                    checked = true;
+                }
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("show_block_dialog", checked);
+                editor.apply();
+                dialog.cancel();
             }
         });
 
