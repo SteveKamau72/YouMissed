@@ -35,7 +35,7 @@ public class MessageSentListener extends BroadcastReceiver {
         int progresID = intent.getIntExtra("progressID", 2989);
 
 
-        Log.d("sms_track_name", new CallUserIdentifier().getUserNameFromContacts(context, phoneNumber));
+//        Log.d("sms_track_name", new CallUserIdentifier().getUserNameFromContacts(context, phoneNumber));
         String contactName = new CallUserIdentifier().getUserNameFromContacts(context, phoneNumber);
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
         Intent myIntent = new Intent(context, MainActivity.class);

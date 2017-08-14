@@ -14,13 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.youmissed.R;
-
-import java.util.List;
+import com.youmissed.utils.Toasty;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +35,7 @@ public class SplashFragment extends Fragment {
     Button btn;
     @BindView(R.id.app_title)
     TextView titleText;
+    String permission;
 
     public SplashFragment() {
     }
@@ -70,30 +71,9 @@ public class SplashFragment extends Fragment {
             public void onClick(View view) {
                 // Check if we're running on Android 6.0 or higher
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
                     // Call some material design APIs here
-                    Dexter.withActivity(getActivity())
-                            .withPermissions(
-                                    Manifest.permission.SEND_SMS,
-                                    Manifest.permission.READ_CONTACTS,
-                                    Manifest.permission.WRITE_CONTACTS,
-                                    Manifest.permission.CALL_PHONE,
-                                    Manifest.permission.READ_PHONE_STATE
-                            ).withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport report) {
-                            ((MainActivity) getActivity()).hideSplashView();
-                        /* ... */
-                        }
-
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                            Toast.makeText(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG).show();
-                            ((MainActivity) getActivity()).finish();
-                        }
-                    }).check();
+                    setSMSPermissions();
                 } else {
-
                     // Implement this feature without material design
                     ((MainActivity) getActivity()).hideSplashView();
                 }
@@ -103,6 +83,75 @@ public class SplashFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void setSMSPermissions() {
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.SEND_SMS)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        setContactsPermissions();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        Toasty.error(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG, true).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission,
+                                                                   PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+
+                }).check();
+    }
+
+    private void setContactsPermissions() {
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_CONTACTS)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        setCallPermissions();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        Toasty.error(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG, true).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission,
+                                                                   PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+
+                }).check();
+    }
+
+    private void setCallPermissions() {
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.CALL_PHONE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        ((MainActivity) getActivity()).hideSplashView();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        Toasty.error(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG, true).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission,
+                                                                   PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+
+                }).check();
     }
 
 
