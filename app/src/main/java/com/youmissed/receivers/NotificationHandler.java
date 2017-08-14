@@ -1,5 +1,6 @@
 package com.youmissed.receivers;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -109,7 +110,11 @@ public class NotificationHandler {
             protected void onPreExecute() {
                 super.onPreExecute();
                 Log.d("progress_notif", "created");
-                mNotificationManager.notify(progresID, nBuilder.build());
+                try {
+                    mNotificationManager.notify(progresID, nBuilder.build());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -131,7 +136,11 @@ public class NotificationHandler {
                                 .setSmallIcon(R.mipmap.ic_launcher);
 
                         // use the same id for update instead created another one
-                        mNotificationManager.notify(progresID, nBuilder.build());
+                        try {
+                            mNotificationManager.notify(progresID, nBuilder.build());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         Thread.sleep(500);
                     }
 
@@ -221,9 +230,14 @@ public class NotificationHandler {
                 .setTicker(resultSmsTask)
                 .setLargeIcon(bitmap).setAutoCancel(true)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
-        mNotificationManager.notify(progresID, nBuilder.build());
+        try {
+            mNotificationManager.notify(progresID, nBuilder.build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         MainActivity mainActivity = new MainActivity();
         mainActivity.saveMissedCallToRealm(number, message, context, smsSent);

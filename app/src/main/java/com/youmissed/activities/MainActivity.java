@@ -29,10 +29,10 @@ import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.nineoldandroids.animation.Animator;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.youmissed.utils.CallsModel;
 import com.youmissed.R;
 import com.youmissed.adapters.MainPagerAdapter;
 import com.youmissed.app.RealmController;
+import com.youmissed.utils.CallsModel;
 import com.youmissed.utils.IntentUtils;
 import com.youmissed.utils.Toasty;
 
