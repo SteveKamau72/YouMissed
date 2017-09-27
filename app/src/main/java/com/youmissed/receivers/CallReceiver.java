@@ -56,7 +56,7 @@ public class CallReceiver extends PhonecallReceiver {
 
         Log.d("sms_track_e", "On missed call");
         NotificationHandler.getInstance(ctx).createProgressNotification(ctx, number, message, start);
-        Log.d("contact_number", number);
+//        Log.d("contact_number", number);
     }
 
 }

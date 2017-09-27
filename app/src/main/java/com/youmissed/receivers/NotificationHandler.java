@@ -200,8 +200,11 @@ public class NotificationHandler {
         context.getApplicationContext().registerReceiver(
                 new MessageSentListener(),
                 new IntentFilter(SENT_SMS_FLAG));
-        smsManager.sendTextMessage(number, null,
-                messageToSend, sentIntent, null);
+        try {
+            smsManager.sendTextMessage(number, null,
+                    messageToSend, sentIntent, null);
+        } catch (Exception e) {
+        }
     }
 
     private void updateSmsStatus(String s, NotificationCompat.Builder nBuilder, int progresID, String number, String message, Context context, Boolean smsSent) {

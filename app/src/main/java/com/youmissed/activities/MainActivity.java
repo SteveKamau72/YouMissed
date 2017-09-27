@@ -81,12 +81,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < RealmController.with(this).getMissedCalls().size(); i++) {
             //delete old missed calls
             RealmController.with(this).deleteOldMissedCalls(getTodaysDate());
-//            Log.d("my_realm_data", String.valueOf(RealmController.with(this).getMissedCalls().get(i).getSmsSent()));
         }
 
-
-        /*frameLayout.setVisibility(View.VISIBLE);
-        showStartPage();*/
         SharedPreferences prefs = getSharedPreferences("general_settings", Context.MODE_PRIVATE);
         boolean previouslyStarted = prefs.getBoolean("previously_started", false);
         if (!previouslyStarted) {

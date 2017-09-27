@@ -252,7 +252,9 @@ public class MissedCallDetail extends AppCompatActivity {
             invalidateOptionsMenu();
             //Toasty.success(getApplicationContext(), getString(R.string.block_user), Toast.LENGTH_SHORT, true).show();
             if (sharedPreferences.getBoolean("show_block_dialog", true)) {
-                Dialogs.showBlockDialog(getApplicationContext());
+                if (!isFinishing()) {
+                    Dialogs.showBlockDialog(MissedCallDetail.this);
+                }
             }
             addBlockedUserToRealm();
             return true;
