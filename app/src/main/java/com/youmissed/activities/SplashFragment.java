@@ -1,6 +1,8 @@
 package com.youmissed.activities;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ public class SplashFragment extends Fragment {
     @BindView(R.id.app_title)
     TextView titleText;
     String permission;
+    SharedPreferences prefs;
 
     public SplashFragment() {
     }
@@ -63,9 +66,17 @@ public class SplashFragment extends Fragment {
         Log.d(TAG, "onCreateView: hit");
         View rootView = inflater.inflate(R.layout.splash_fragment, container, false);
         ButterKnife.bind(this, rootView);
+        setViews();
+
+        return rootView;
+    }
+
+    private void setViews() {
         Typeface khandBold = Typeface.createFromAsset(getResources().getAssets(), "fonts/Balkeno.ttf");
         titleText.setTypeface(khandBold);
-        titleText.setText("YouMissed");
+        titleText.setText(getString(R.string.app_name));
+
+        prefs = getActivity().getSharedPreferences("general_settings", Context.MODE_PRIVATE);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,13 +87,11 @@ public class SplashFragment extends Fragment {
                 } else {
                     // Implement this feature without material design
                     ((MainActivity) getActivity()).hideSplashView();
+                    setBooleanForSplashScreenDisplay(true);
                 }
-
                 //
             }
         });
-
-        return rootView;
     }
 
     private void setSMSPermissions() {
@@ -92,11 +101,13 @@ public class SplashFragment extends Fragment {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         setContactsPermissions();
+                        setBooleanForSplashScreenDisplay(true);
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
                         Toasty.error(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG, true).show();
+                        setBooleanForSplashScreenDisplay(false);
                     }
 
                     @Override
@@ -115,11 +126,13 @@ public class SplashFragment extends Fragment {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         setCallPermissions();
+                        setBooleanForSplashScreenDisplay(true);
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
                         Toasty.error(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG, true).show();
+                        setBooleanForSplashScreenDisplay(false);
                     }
 
                     @Override
@@ -138,11 +151,13 @@ public class SplashFragment extends Fragment {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         ((MainActivity) getActivity()).hideSplashView();
+                        setBooleanForSplashScreenDisplay(true);
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
                         Toasty.error(getActivity(), "YouMissed app cannot work without the requested permissions", Toast.LENGTH_LONG, true).show();
+                        setBooleanForSplashScreenDisplay(false);
                     }
 
                     @Override
@@ -154,6 +169,11 @@ public class SplashFragment extends Fragment {
                 }).check();
     }
 
+    void setBooleanForSplashScreenDisplay(Boolean started) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("previously_started", started);
+        edit.apply();
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@ package com.youmissed.activities;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     Boolean toStopSendingSMS = false;
     private CircularBarPager mCircularBarPager;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         //get realm instance
         realm = RealmController.with(this).getRealm();
+        sharedPreferences = getSharedPreferences("ACCOUNT", MODE_PRIVATE);
         //RealmController.with(this).updateSmsSentStatus("0772576503");
         Log.d("my_realm_data", String.valueOf(RealmController.with(this).getMissedCalls()));
         for (int i = 0; i < RealmController.with(this).getMissedCalls().size(); i++) {
@@ -86,9 +90,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("general_settings", Context.MODE_PRIVATE);
         boolean previouslyStarted = prefs.getBoolean("previously_started", false);
         if (!previouslyStarted) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean("previously_started", Boolean.TRUE);
-            edit.apply();
             frameLayout.setVisibility(View.VISIBLE);
             showStartPage();
 
@@ -410,16 +411,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_share) {
-            final String appPackageName = getPackageName();
-            startActivity(Intent.createChooser(IntentUtils.shareContent("" +
-                    "Automatically send SMS replies to missed calls. Checkout the app: " + getString(R.string.message_add_on), "YouMissedApp for Android"), "Share..."));
+            startActivity(Intent.createChooser(IntentUtils.shareContent("Automatically send SMS replies to missed calls. Checkout the app: " + getString(R.string.message_add_on), "YouMissedApp for Android"), "Share..."));
         }
-      /*   startActivity(Intent.createChooser(shareIntent, "share..."));
-
-      final String appPackageName = getPackageName();
-      "Hey, check out " + title.getText() + " at BuyAtHome app for Android at only Kshs." + tvAmount.getText()
-                + "\nDownload the app for more amazing deals: "
-                + "https://play.google.com/store/apps/details?id=" + appPackageName*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -439,8 +432,6 @@ public class MainActivity extends AppCompatActivity {
         }
         NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         nMgr.cancel(2989);
-
-
     }
 
     public Boolean toStopSendingSMSMethod() {
@@ -453,9 +444,8 @@ public class MainActivity extends AppCompatActivity {
                 .icon(getResources().getDrawable(R.drawable.ic_app_icon))
                 .title("We're awesome, yes? Rate us")
                 .titleTextColor(R.color.black)
-                .threshold(3)
-                .session(3)
-//                .session(4)
+                .threshold(5)
+                .session(5)
                 .formTitle("Submit Feedback")
                 .formHint("Tell us where we can improve")
                 .formSubmitText("Submit")
@@ -478,9 +468,36 @@ public class MainActivity extends AppCompatActivity {
 
         ratingDialog.show();
     }
-    // TODO: 1/10/17 use realm database for missed calls
-    // TODO: 1/10/17 custom adapter for missed calls
-    // TODO: 1/10/17 what i need- current time, phone-number, name of user
-    // TODO: 1/14/17  
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (sharedPreferences.getBoolean("new_update", false)) {
+            showUpdateDialog();
+        }
+    }
+
+    private void showUpdateDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("New Update Available!");
+        alertDialog.setMessage("Upgrade to get the latest version of YouMissed!");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "UPDATE",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        startActivity(Intent.createChooser(IntentUtils.openPlayStore(getApplicationContext(), false), ""));
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("new_update", false);
+                        editor.apply();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
 }

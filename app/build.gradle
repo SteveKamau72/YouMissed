@@ -40,4 +40,7 @@ dependencies {
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.karumi:dexter:3.0.0'
     compile 'com.codemybrainsout.rating:ratingdialog:1.0.4'
+    // jsoup HTML parser library @ https://jsoup.org/
+    compile 'org.jsoup:jsoup:1.10.3'
+
 }
