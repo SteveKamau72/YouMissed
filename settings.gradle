@@ -1,1 +1,1 @@
-include ':app', ':circular-library'
+include ':app'

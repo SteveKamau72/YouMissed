@@ -38,4 +38,10 @@ public class VersionChecker extends AsyncTask<String, String, String> {
 
         return newVersion;
     }
+
+    @Override
+    protected void onPostExecute(String result) {
+        // might want to change "executed" for the returned string passed
+        // into onPostExecute() but that is upto you
+    }
 }

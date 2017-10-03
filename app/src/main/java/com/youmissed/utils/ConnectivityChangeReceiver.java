@@ -18,39 +18,44 @@ import java.util.concurrent.ExecutionException;
 public class ConnectivityChangeReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
 
         ConnectivityManager cm = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         if (cm == null)
             return;
         if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected()) {
             // Send here
-            VersionChecker versionChecker = new VersionChecker(context);
-            try {
-                String latestVersion = versionChecker.execute().get();
-                PackageManager manager = context.getPackageManager();
-                PackageInfo info = null;
-                try {
-                    info = manager.getPackageInfo(
-                            context.getPackageName(), 0);
-                    String version = info.versionName;
-                    if (latestVersion != null) {
-                        if (latestVersion.equals(version)) {
-                            updateStatus(context, false);
-                        } else {
-                            updateStatus(context, true);
+            new Thread(new Runnable() {
+                public void run() {
+                    VersionChecker versionChecker = new VersionChecker(context);
+                    try {
+                        String latestVersion = versionChecker.execute().get();
+                        PackageManager manager = context.getPackageManager();
+                        PackageInfo info = null;
+                        try {
+                            info = manager.getPackageInfo(
+                                    context.getPackageName(), 0);
+                            String version = info.versionName;
+                            if (latestVersion != null) {
+                                if (latestVersion.equals(version)) {
+                                    updateStatus(context, false);
+                                } else {
+                                    updateStatus(context, true);
+                                }
+                            }
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
 //                Toast.makeText(context, latestVersion, Toast.LENGTH_SHORT).show();
-            } catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
 //                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
         } else {
             // Do nothing or notify user somehow
         }
@@ -59,7 +64,7 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
     private void updateStatus(Context context, Boolean newVersion) {
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
-        sharedPreferences = context.getSharedPreferences("ACCOUNT", context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("general_settings", context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putBoolean("new_update", newVersion);
         editor.apply();

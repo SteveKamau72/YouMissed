@@ -28,13 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codemybrainsout.ratingdialog.RatingDialog;
-import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.nineoldandroids.animation.Animator;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.youmissed.R;
 import com.youmissed.adapters.MainPagerAdapter;
 import com.youmissed.app.RealmController;
 import com.youmissed.utils.CallsModel;
+import com.youmissed.utils.CircularBarPager;
 import com.youmissed.utils.IntentUtils;
 import com.youmissed.utils.Toasty;
 
@@ -246,23 +246,27 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.d("sms_track_e", "copy to realm");
                         //get realm instance
-                        Realm realm = RealmController.with(MainActivity.this).getRealm();
-                        ArrayList<CallsModel> callsModelArrayList = new ArrayList<>();
-                        callsModelArrayList.clear();
-                        CallsModel callsModel = new CallsModel();
-                        callsModel.setId((int) (1 + System.currentTimeMillis()));
-                        callsModel.setNumberTimesMissed("1");
-                        callsModel.setPhoneNumber(phoneNumber);
-                        callsModel.setUserName(finalContactName);
-                        callsModel.setSmsSent(sentSms);
-                        callsModel.setMissedCallTime(getTime());
-                        callsModel.setDateTimeMissed(getTodaysDate());
-                        callsModelArrayList.add(callsModel);
-                        // Persist your data easily
-                        realm.beginTransaction();
-                        realm.copyToRealmOrUpdate(callsModelArrayList);
-                        realm.commitTransaction();
-                        Log.d("my_realm_data", String.valueOf(RealmController.with(MainActivity.this).getMissedCalls()));
+                        try {
+                            Realm realm = RealmController.with(MainActivity.this).getRealm();
+                            ArrayList<CallsModel> callsModelArrayList = new ArrayList<>();
+                            callsModelArrayList.clear();
+                            CallsModel callsModel = new CallsModel();
+                            callsModel.setId((int) (1 + System.currentTimeMillis()));
+                            callsModel.setNumberTimesMissed("1");
+                            callsModel.setPhoneNumber(phoneNumber);
+                            callsModel.setUserName(finalContactName);
+                            callsModel.setSmsSent(sentSms);
+                            callsModel.setMissedCallTime(getTime());
+                            callsModel.setDateTimeMissed(getTodaysDate());
+                            callsModelArrayList.add(callsModel);
+                            // Persist your data easily
+                            realm.beginTransaction();
+                            realm.copyToRealmOrUpdate(callsModelArrayList);
+                            realm.commitTransaction();
+                            Log.d("my_realm_data", String.valueOf(RealmController.with(MainActivity.this).getMissedCalls()));
+                        } catch (Exception e) {
+
+                        }
                     }
                 });
             }

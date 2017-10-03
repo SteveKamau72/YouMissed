@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YouMissed.iml" filepath="$PROJECT_DIR$/YouMissed.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/circular-library/circular-library.iml" filepath="$PROJECT_DIR$/circular-library/circular-library.iml" />
     </modules>
   </component>
 </project>
